@@ -1,10 +1,17 @@
 import tkinter as tk
 from tkinter import ttk
 
+from tabs.tab_dashboard import tab_dashboard
+from tabs.tab_hx_1023 import tab_hx_1023
+
 class Dashboard:
     def __init__(self, win):
         self.win = win
-        self.style = ttk.Style()
+        self.current_tab = tab_dashboard
+        self.tabs = {
+            'dashboard': tab_dashboard,
+            'hx_1023': tab_hx_1023,
+        }
         self.window_setup()
         self.side_bar_setup()
         self.main_frame_setup()
@@ -53,19 +60,24 @@ class Dashboard:
         self.button_xlsx.pack(fill='x', anchor='w', padx=3, pady=3)
 
     def main_frame_setup(self):
-        self.style.configure('main.TFrame', background='#303030')
-        self.main_frame = ttk.Frame(self.win, style='main.TFrame')
+        self.main_frame = ttk.Frame(self.win)
         self.main_frame.pack(side='right', fill='both', expand=True, padx=10, pady=10)
+
+        self.current_tab.enter(self.main_frame)
 
 
     def on_button_dashboard_clicked(self):
-        pass
+        self.current_tab.exit()
+        self.current_tab = self.tabs['dashboard']
+        self.current_tab.enter(self.main_frame)
 
     def on_button_spreadsheet_clicked(self):
         pass
 
     def on_button_hx_1023_clicked(self):
-        pass
+        self.current_tab.exit()
+        self.current_tab = self.tabs['hx_1023']
+        self.current_tab.enter(self.main_frame)
 
     def on_button_alg_450_clicked(self):
         pass
