@@ -1,8 +1,16 @@
 from tkinter import ttk
+from dotenv import load_dotenv
+import os
 import tkinter as tk
+import supabase as sb
+
+load_dotenv()
 
 class TabALG450():
     def __init__(self):
+        self.url = os.getenv("SUPABASE_URL")
+        self.key = os.getenv("SUPABASE_KEY")
+        self.db = sb.create_client(self.url, self.key)
         self.allergies = [
             "Peanuts", "Tree nuts", "Milk", "Eggs", "Wheat", "Soy", "Fish", "Shellfish",
             "Sesame", "Corn", "Gluten", "Mustard", "Celery", "Lupin", "Sulfites",
@@ -102,8 +110,8 @@ class TabALG450():
             "date": self.entry_date.get(),
             "allergies": selected_allergies,
             "additional_info": self.text_additional.get("1.0", "end-1c"),
-            "validated": self.check_validation.instate(['selected'])
         }
+        self.db.table("alg_450").insert(self.submitted_data).execute()
         self.button_submit.config(state='disabled')
         self.entry_patient.delete(0, 'end')
         self.entry_date.delete(0, 'end')

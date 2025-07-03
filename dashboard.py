@@ -3,7 +3,7 @@ from tkinter import ttk
 
 from tabs.tab_dashboard import tab_dashboard
 from tabs.tab_hx_1023 import tab_hx_1023
-from tabs.tab_alg_459 import tab_alg_450
+from tabs.tab_alg_450 import tab_alg_450
 
 class Dashboard:
     def __init__(self, win):

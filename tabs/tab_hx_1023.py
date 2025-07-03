@@ -1,9 +1,16 @@
 from tkinter import ttk
+from dotenv import load_dotenv
+import os
 import tkinter as tk
+import supabase as sb
+
+load_dotenv()
 
 class TabHX1023():
     def __init__(self):
-        pass
+        self.url = os.getenv("SUPABASE_URL")
+        self.key = os.getenv("SUPABASE_KEY")
+        self.db = sb.create_client(self.url, self.key)
 
     def enter(self, parent):
         self.parent = parent
@@ -94,8 +101,10 @@ class TabHX1023():
             "treatments": self.text_treatments.get("1.0", "end-1c"),
             "response": self.text_response.get("1.0", "end-1c"),
             "recommendations": self.text_recommendations.get("1.0", "end-1c"),
-            "validated": self.check_validation.instate(['selected'])
         }
+
+        self.db.table("hx_1023").insert(self.submitted_data).execute()
+
         self.button_submit.config(state='disabled')
         self.entry_patient.delete(0, 'end')
         self.entry_doctor.delete(0, 'end')
