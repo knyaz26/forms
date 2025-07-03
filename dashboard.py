@@ -4,8 +4,11 @@ from tkinter import ttk
 class Dashboard:
     def __init__(self, win):
         self.win = win
+        self.style = ttk.Style()
         self.window_setup()
         self.side_bar_setup()
+        self.main_frame_setup()
+
 
     def window_setup(self):
         self.win.title("forms")
@@ -14,39 +17,46 @@ class Dashboard:
        
     def side_bar_setup(self):
         self.side_bar = ttk.Frame(self.win)
-        self.side_bar.pack(anchor='w', fill='y', expand=True, padx=10, pady=10)
+        self.side_bar.pack(side='left', fill='y', padx=10, pady=10)
 
-        self.label_app_name = ttk.Label(self.side_bar, text="FORMS", font=("Arial", 30))
-        self.label_app_name.pack(padx=10, pady=10)
+        self.label_app_name = ttk.Label(self.side_bar, text="FORMS", font=("Arial", 30), width=10)
+        self.label_app_name.pack(padx=10, pady=10, anchor='w')
 
-        #display
+        # display
         self.frame_display = ttk.Frame(self.side_bar)
-        self.frame_display.pack(padx=10, pady=10, fill='x')
-
+        self.frame_display.pack(fill='x', padx=10, pady=10)
+        self.label_display = ttk.Label(self.frame_display, text="Display", font=("Arial", 14))
+        self.label_display.pack(anchor='w', padx=5, pady=5)
         self.button_dashboard = ttk.Button(self.frame_display, text="Dashboard", command=self.on_button_dashboard_clicked)
-        self.button_dashboard.pack()
+        self.button_dashboard.pack(fill='x', anchor='w', padx=3, pady=3)
         self.button_spreadsheet = ttk.Button(self.frame_display, text="Spreadsheet", command=self.on_button_spreadsheet_clicked)
-        self.button_spreadsheet.pack()
+        self.button_spreadsheet.pack(fill='x', anchor='w', padx=3, pady=3)
 
-        #input
+        # insert
         self.frame_insert = ttk.Frame(self.side_bar)
-        self.frame_insert.pack(padx=10, pady=10, fill='x')
-
+        self.frame_insert.pack(fill='x', padx=10, pady=10)
+        self.label_insert = ttk.Label(self.frame_insert, text="Insert", font=("Arial", 14))
+        self.label_insert.pack(anchor='w', padx=5, pady=5)
         self.button_HX_1023 = ttk.Button(self.frame_insert, text="HX-1023", command=self.on_button_hx_1023_clicked)
-        self.button_HX_1023.pack()
-
+        self.button_HX_1023.pack(fill='x', anchor='w', padx=3, pady=3)
         self.button_ALG_450 = ttk.Button(self.frame_insert, text="ALG-450", command=self.on_button_alg_450_clicked)
-        self.button_ALG_450.pack()
+        self.button_ALG_450.pack(fill='x', anchor='w', padx=3, pady=3)
 
-        #export
+        # export
         self.frame_export = ttk.Frame(self.side_bar)
-        self.frame_export.pack(padx=10, pady=10, fill='x')
-
+        self.frame_export.pack(fill='x', padx=10, pady=10)
+        self.label_export = ttk.Label(self.frame_export, text="Export", font=("Arial", 14))
+        self.label_export.pack(anchor='w', padx=5, pady=5)
         self.button_pdf = ttk.Button(self.frame_export, text="Export PDF", command=self.on_button_pdf_clicked)
-        self.button_pdf.pack()
-
+        self.button_pdf.pack(fill='x', anchor='w', padx=3, pady=3)
         self.button_xlsx = ttk.Button(self.frame_export, text="Export XLSX", command=self.on_button_xlsx_clicked)
-        self.button_xlsx.pack()
+        self.button_xlsx.pack(fill='x', anchor='w', padx=3, pady=3)
+
+    def main_frame_setup(self):
+        self.style.configure('main.TFrame', background='#303030')
+        self.main_frame = ttk.Frame(self.win, style='main.TFrame')
+        self.main_frame.pack(side='right', fill='both', expand=True, padx=10, pady=10)
+
 
     def on_button_dashboard_clicked(self):
         pass
