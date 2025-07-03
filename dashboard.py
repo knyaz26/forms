@@ -3,6 +3,7 @@ from tkinter import ttk
 
 from tabs.tab_dashboard import tab_dashboard
 from tabs.tab_hx_1023 import tab_hx_1023
+from tabs.tab_alg_459 import tab_alg_450
 
 class Dashboard:
     def __init__(self, win):
@@ -11,6 +12,7 @@ class Dashboard:
         self.tabs = {
             'dashboard': tab_dashboard,
             'hx_1023': tab_hx_1023,
+            'alg_450': tab_alg_450,
         }
         self.window_setup()
         self.side_bar_setup()
@@ -80,7 +82,9 @@ class Dashboard:
         self.current_tab.enter(self.main_frame)
 
     def on_button_alg_450_clicked(self):
-        pass
+        self.current_tab.exit()
+        self.current_tab = self.tabs['alg_450']
+        self.current_tab.enter(self.main_frame)
 
     def on_button_pdf_clicked(self):
         pass
