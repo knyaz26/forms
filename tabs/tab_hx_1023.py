@@ -82,8 +82,12 @@ class TabHX1023():
             self.button_submit.config(state='disabled')
 
     def on_button_submit_clicked(self):
+        patient_name = self.entry_patient.get().strip()
+        if not patient_name:
+            self.entry_patient.focus_set()
+            return
         self.submitted_data = {
-            "patient": self.entry_patient.get(),
+            "patient": patient_name,
             "doctor": self.entry_doctor.get(),
             "date": self.entry_date.get(),
             "observations": self.text_observations.get("1.0", "end-1c"),
@@ -93,6 +97,14 @@ class TabHX1023():
             "validated": self.check_validation.instate(['selected'])
         }
         self.button_submit.config(state='disabled')
+        self.entry_patient.delete(0, 'end')
+        self.entry_doctor.delete(0, 'end')
+        self.entry_date.delete(0, 'end')
+        self.text_observations.delete("1.0", "end")
+        self.text_treatments.delete("1.0", "end")
+        self.text_response.delete("1.0", "end")
+        self.text_recommendations.delete("1.0", "end")
+        self.check_validation.state(['!selected'])
 
     def exit(self):
         self.lable_title.pack_forget()

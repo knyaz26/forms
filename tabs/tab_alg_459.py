@@ -92,15 +92,25 @@ class TabALG450():
             self.button_submit.config(state='disabled')
 
     def on_button_submit_clicked(self):
+        patient_name = self.entry_patient.get().strip()
+        if not patient_name:
+            self.entry_patient.focus_set()
+            return
         selected_allergies = [allergy for allergy, var in zip(self.allergies, self.allergy_vars) if var.get()]
         self.submitted_data = {
-            "patient": self.entry_patient.get(),
+            "patient": patient_name,
             "date": self.entry_date.get(),
             "allergies": selected_allergies,
             "additional_info": self.text_additional.get("1.0", "end-1c"),
             "validated": self.check_validation.instate(['selected'])
         }
         self.button_submit.config(state='disabled')
+        self.entry_patient.delete(0, 'end')
+        self.entry_date.delete(0, 'end')
+        self.text_additional.delete("1.0", "end")
+        for var in self.allergy_vars:
+            var.set(False)
+        self.check_validation.state(['!selected'])
 
     def exit(self):
         self.lable_title.pack_forget()
