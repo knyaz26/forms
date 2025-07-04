@@ -103,7 +103,34 @@ class TabHX1023():
             "recommendations": self.text_recommendations.get("1.0", "end-1c"),
         }
 
-        self.db.table("hx_1023").insert(self.submitted_data).execute()
+        result = self.db.table("hx_1023").insert(self.submitted_data).execute()
+        error = getattr(result, "error", None)
+        bg = self.parent.cget("background") if "background" in self.parent.keys() else "#303030"
+        if not error and hasattr(result, "status_code") and result.status_code in (200, 201):
+            popup = tk.Toplevel(self.parent)
+            popup.title("Success")
+            popup.geometry("280x120")
+            popup.configure(bg=bg)
+            ttk.Label(popup, text="Data submitted successfully!", font=("Arial", 14), background=bg).pack(padx=10, pady=10)
+            ttk.Button(popup, text="OK", command=popup.destroy).pack(padx=10, pady=10)
+            popup.transient(self.parent)
+            popup.grab_set()
+            popup.focus_set()
+            popup.wait_window()
+        else:
+            popup = tk.Toplevel(self.parent)
+            popup.title("Error")
+            popup.geometry("320x140")
+            popup.configure(bg=bg)
+            msg = "Failed to submit data. Please try again."
+            if error:
+                msg += f"\n{error}"
+            ttk.Label(popup, text=msg, font=("Arial", 14), background=bg).pack(padx=10, pady=10)
+            ttk.Button(popup, text="OK", command=popup.destroy).pack(padx=10, pady=10)
+            popup.transient(self.parent)
+            popup.grab_set()
+            popup.focus_set()
+            popup.wait_window()
 
         self.button_submit.config(state='disabled')
         self.entry_patient.delete(0, 'end')
