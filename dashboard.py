@@ -60,6 +60,12 @@ class Dashboard:
         self.button_xlsx = ttk.Button(self.frame_export, text="Export XLSX", command=self.on_button_xlsx_clicked)
         self.button_xlsx.pack(fill='x', anchor='w', padx=3, pady=3)
 
+        # exit
+        self.frame_exit = ttk.Frame(self.side_bar)
+        self.frame_exit.pack(side='bottom', fill='x', padx=10, pady=10)
+        self.button_exit = ttk.Button(self.frame_exit, text="Exit", command=self.win.quit)
+        self.button_exit.pack(fill='x', anchor='w', padx=3, pady=3)
+
     def main_frame_setup(self):
         self.main_frame = ttk.Frame(self.win)
         self.main_frame.pack(side='right', fill='both', expand=True, padx=10, pady=10)
@@ -89,4 +95,7 @@ class Dashboard:
         pass
 
     def on_button_xlsx_clicked(self):
+        pass
+
+    def on_button_connect_clicked(self):
         pass
