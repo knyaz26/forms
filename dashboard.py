@@ -4,6 +4,7 @@ from tkinter import ttk
 from tabs.tab_dashboard import tab_dashboard
 from tabs.tab_hx_1023 import tab_hx_1023
 from tabs.tab_alg_450 import tab_alg_450
+from tabs.tab_spreadsheet import tab_spreadsheet
 
 class Dashboard:
     def __init__(self, win):
@@ -13,6 +14,7 @@ class Dashboard:
             'dashboard': tab_dashboard,
             'hx_1023': tab_hx_1023,
             'alg_450': tab_alg_450,
+            'spreadsheet': tab_spreadsheet,
         }
         self.window_setup()
         self.side_bar_setup()
@@ -79,7 +81,9 @@ class Dashboard:
         self.current_tab.enter(self.main_frame)
 
     def on_button_spreadsheet_clicked(self):
-        pass
+        self.current_tab.exit()
+        self.current_tab = self.tabs['spreadsheet']
+        self.current_tab.enter(self.main_frame)
 
     def on_button_hx_1023_clicked(self):
         self.current_tab.exit()
