@@ -20,8 +20,7 @@ class Dashboard:
 
 
     def window_setup(self):
-        self.win.title("forms")
-        self.win.state('zoomed')
+        self.win.attributes("-fullscreen", True)
         self.win.configure(background='#303030')
        
     def side_bar_setup(self):
