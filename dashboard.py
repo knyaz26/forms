@@ -5,6 +5,8 @@ from tabs.tab_dashboard import tab_dashboard
 from tabs.tab_hx_1023 import tab_hx_1023
 from tabs.tab_alg_450 import tab_alg_450
 from tabs.tab_spreadsheet import tab_spreadsheet
+from tabs.tab_pdf import tab_pdf
+from tabs.tab_xlsx import tab_xlsx
 
 class Dashboard:
     def __init__(self, win):
@@ -15,6 +17,8 @@ class Dashboard:
             'hx_1023': tab_hx_1023,
             'alg_450': tab_alg_450,
             'spreadsheet': tab_spreadsheet,
+            'tab_pfd': tab_pdf,
+            'tab_xlsx': tab_xlsx,
         }
         self.window_setup()
         self.side_bar_setup()
@@ -96,10 +100,12 @@ class Dashboard:
         self.current_tab.enter(self.main_frame)
 
     def on_button_pdf_clicked(self):
-        pass
+        self.current_tab.exit()
+        self.current_tab = self.tabs['tab_pfd']
+        self.current_tab.enter(self.main_frame)
 
     def on_button_xlsx_clicked(self):
-        pass
+        self.current_tab.exit()
+        self.current_tab = self.tabs['tab_xlsx']
+        self.current_tab.enter(self.main_frame)
 
-    def on_button_connect_clicked(self):
-        pass
