@@ -27,8 +27,23 @@ class TabDashboard():
             chart_data[i] = count
         return chart_data
 
+    def get_allergies_data(self):
+        allergies_data = {}
+        result = self.db.table("alg_450").select("allergies").execute()
+        rows = getattr(result, "data", [])
+        for row in rows:
+            allergies = row.get("allergies", [])
+            if allergies:
+                for allergy in allergies:
+                    cleaned = allergy.strip()
+                    if cleaned:
+                        allergies_data[cleaned] = allergies_data.get(cleaned, 0) + 1
+        return allergies_data
+
+
     def enter(self, parent):
         chart_data = self.get_doctor_chart_data()
+        allergies_data = self.get_allergies_data()
         self.label_title = ttk.Label(parent, text="tab dashboard", font=("Arial", 24))
         self.label_title.pack(padx=20, pady=20)
 
@@ -36,7 +51,7 @@ class TabDashboard():
         self.axs = self.fig.subplots(2, 2)
 
         self.axs[0, 0].pie(list(chart_data.values()), labels=list(chart_data.keys()))
-        self.axs[0, 1].plot([1, 2, 3, 4], [1, 2, 3, 4], 'bo-')
+        self.axs[0, 1].stem(list(allergies_data.values()), label=list(allergies_data.keys()), markerfmt="o", basefmt=" ")
         self.axs[1, 0].plot([1, 2, 3, 4], [1, 3, 2, 4], 'go-')
         self.axs[1, 1].plot([1, 2, 3, 4], [1, 2, 4, 3], 'yo-')
 

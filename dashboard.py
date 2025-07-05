@@ -75,7 +75,6 @@ class Dashboard:
     def main_frame_setup(self):
         self.main_frame = ttk.Frame(self.win)
         self.main_frame.pack(side='right', fill='both', expand=True, padx=10, pady=10)
-
         self.current_tab.enter(self.main_frame)
 
 
