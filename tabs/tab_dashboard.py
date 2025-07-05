@@ -1,5 +1,6 @@
 from tkinter import ttk
 import tkinter as tk
+from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import os
@@ -48,6 +49,8 @@ class TabDashboard():
         self.label_title.pack(padx=20, pady=20)
 
         self.fig = Figure(figsize=(5, 4), dpi=100)
+        plt.style.use('dark_background')
+        self.fig.patch.set_facecolor('#222222')
         self.axs = self.fig.subplots(2, 2)
 
         self.axs[0, 0].pie(list(chart_data.values()), labels=list(chart_data.keys()))
