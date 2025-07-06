@@ -1,6 +1,8 @@
+import random
 from tkinter import ttk
 import tkinter as tk
 from matplotlib import pyplot as plt
+from matplotlib.dates import DayLocator
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import os
@@ -41,12 +43,34 @@ class TabDashboard():
                         allergies_data[cleaned] = allergies_data.get(cleaned, 0) + 1
         return allergies_data
 
+    def get_date_data(self):
+        date_data = {}
+        dates = []
+        result = self.db.table("hx_1023").select("date").execute()
+        rows = getattr(result, "data", [])
+        for row in rows:
+            date = row.get("date")
+            date = date.split("/")
+            if date[2] == "2025":
+                dates.append(date[1])
+        for date in dates:
+            if date not in date_data:
+                date_data[date] = 1
+            else:
+                date_data[date] += 1
+        return dict(sorted(date_data.items()))
 
     def enter(self, parent):
         chart_data = self.get_doctor_chart_data()
         allergies_data = self.get_allergies_data()
+        date_data = self.get_date_data()
         self.label_title = ttk.Label(parent, text="tab dashboard", font=("Arial", 24))
         self.label_title.pack(padx=20, pady=20)
+        a = []
+        b = []
+        for i in range(20):
+            a.append(random.randint(1, 100))
+            b.append(random.randint(1, 100))
 
         self.fig = Figure(figsize=(5, 4), dpi=100)
         plt.style.use('dark_background')
@@ -55,8 +79,9 @@ class TabDashboard():
 
         self.axs[0, 0].pie(list(chart_data.values()), labels=list(chart_data.keys()))
         self.axs[0, 1].stem(list(allergies_data.values()), label=list(allergies_data.keys()), markerfmt="o", basefmt=" ")
-        self.axs[1, 0].plot([1, 2, 3, 4], [1, 3, 2, 4], 'go-')
-        self.axs[1, 1].plot([1, 2, 3, 4], [1, 2, 4, 3], 'yo-')
+        self.axs[1, 0].fill_between(list(date_data.keys()), list(date_data.values()), color='orange')
+        self.axs[1, 0].tick_params(axis='x', rotation=45, labelsize=8)
+        self.axs[1, 1].scatter(a, b ,color='red')
 
         self.canvas = FigureCanvasTkAgg(self.fig, master=parent)
         self.canvas.draw()
